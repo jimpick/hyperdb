@@ -584,10 +584,8 @@ HyperDB.prototype._ready = function (cb) {
       if (err) return done(err)
 
       self._localWriter = self._writers[self.feeds.indexOf(self.local)]
-      console.log('Jim1', self.local.key.toString('hex'), self.local.length)
-      console.log('Jim1a', self._localWriter._feed.key.toString('hex'))
+      if (self._contentStorage) self._localWriter._ensureContentFeed(null)
       self._localWriter.head(function (err) {
-        console.log('Jim2')
         if (err) return done(err)
         if (!self._contentStorage) return done(null)
 
@@ -760,7 +758,6 @@ Writer.prototype.get = function (seq, cb) {
 
 Writer.prototype.head = function (cb) {
   var len = this.length()
-  console.log('Jim writer head', len)
   if (!len) return process.nextTick(cb, null, null, this._id)
   this.get(len - 1, cb)
 }
@@ -822,9 +819,7 @@ Writer.prototype._addWriters = function (head, cb) {
 }
 
 Writer.prototype._ensureContentFeed = function (key) {
-  console.log('Jim _ensureContentFeed a', key)
   if (this._contentFeed) return
-  console.log('Jim _ensureContentFeed b', key)
 
   var self = this
   var secretKey = null
