@@ -589,7 +589,6 @@ HyperDB.prototype._ready = function (cb) {
         if (err) return done(err)
         if (!self._contentStorage) return done(null)
 
-        self._localWriter._ensureContentFeed(null)
         self.localContent = self._localWriter._contentFeed
         self.localContent.ready(done)
       })
