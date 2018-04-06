@@ -274,7 +274,7 @@ HyperDB.prototype.authorized = function (key, cb) {
     }
 
     for (var j = 0; j < max; j++) {
-      var feedKey = self.feeds[head.clock[j]].key
+      var feedKey = self.feeds[j].key
       if (feedKey.equals(key)) {
         return cb(null, true)
       }
